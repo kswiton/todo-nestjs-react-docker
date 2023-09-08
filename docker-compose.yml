@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  nestjs-backend:
+    build:
+      context: ./todo-list-backend
+    ports:
+      - "3005:3005"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./todo-list-backend:/app
+
+  react-frontend:
+    depends_on:
+      - nestjs-backend
+    build:
+      context: ./todo-list-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=http://localhost:3005
+    volumes:
+      - ./todo-list-frontend:/app
